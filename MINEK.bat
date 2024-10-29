@@ -1,19 +1,15 @@
 @echo off
-curl -s -L -o setup.py https://gitlab.com/chamod12/lm_win-10_github_rdp/-/raw/main/setup.py
-curl -s -L -o show.bat https://gitlab.com/chamod12/lm_win-10_github_rdp/-/raw/main/show.bat
-curl -s -L -o loop.bat https://gitlab.com/chamod12/loop-win10/-/raw/main/loop.bat
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://www.litemanager.com/soft/litemanager_5.zip', 'litemanager_5.zip')"
-powershell -Command "Expand-Archive -Path 'litemanager_5.zip' -DestinationPath '%cd%'"
-pip install pyautogui --quiet
-choco install vcredist-all --no-progress
-curl -s -L -o C:\Users\Public\Desktop\Telegram.exe https://telegram.org/dl/desktop/win64
-curl -s -L -o C:\Users\Public\Desktop\Winrar.exe https://www.rarlab.com/rar/winrar-x64-621.exe
-curl -s -L -o wall.bat https://gitlab.com/chamod12/changewallpaper-win10/-/raw/main/wall.bat
-powershell -Command "Invoke-WebRequest 'https://github.com/chieunhatnang/VM-QuickConfig/releases/download/1.6.1/VMQuickConfig.exe' -OutFile 'C:\Users\Public\Desktop\VMQuickConfig.exe'"
-C:\Users\Public\Desktop\Telegram.exe /VERYSILENT /NORESTART
-C:\Users\Public\Desktop\Winrar.exe /S
-net user runneradmin TheDisa1a
-python -c "import pyautogui as pag; pag.click(897, 64, duration=9999)"
-start "" "LiteManager Pro - Server.msi"
-python setup.py
-call wall.bat
+:: Enable Remote Desktop
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+:: Allow Remote Desktop through Firewall
+netsh advfirewall firewall set rule group="remote desktop" new enable=yes
+
+:: Display IP address and port
+echo IP Address: %COMPUTERNAME%
+echo Port: 3389
+
+:: Start Remote Desktop Session Host
+net start TermService
+
+echo RDP server is now active.
