@@ -13,6 +13,14 @@ echo Port: 3389
 echo IP Address:
 ipconfig | findstr /i "IPv4 Address"
 echo.
+use Net::Address::IP::Cipher;
+
+my $ipcipher = Net::Address::IP::Cipher->new(
+    password => 'super secret'
+);
+
+my $dec = $ipcipher->dec('b733:fb7:c957:82fc:3d67:e7c3:a667:28da');
+print $dec;  # ::1
 
 :: Display Port
 echo Port: 3389
